@@ -13,6 +13,9 @@ interface IProps {
 /**
  * Perspective library adds load to HTMLElement prototype.
  * This interface acts as a wrapper for Typescript compiler.
+ * In 'Graph.tsx', enable 'PerspectiveViewerElement' to behave like an HTMLElement
+ * Achieve this by extending the 'HTMLElement' class from the 'PerspectiveViewerElement' interface
+ * This allows the Graph component to react to state changes appropriately
  */
 interface PerspectiveViewerElement extends HTMLElement {
   load: (table: Table) => void,
@@ -30,6 +33,12 @@ class Graph extends Component<IProps, {}> {
     return React.createElement('perspective-viewer');
   }
 
+  /**
+   * Modify the 'componentDidMount' method in 'Graph.tsx'
+   * The method runs after the component has been rendered to the DOM
+   * Simplify the 'const elem' definition by assigning it directly to 'document.getElementsByTagName'
+   * This works since 'PerspectiveViewerElement' now extends 'HTMLElement'
+   */
   componentDidMount() {
     // Get element to attach the table from the DOM.
     const elem = document.getElementsByTagName('perspective-viewer')[0] as unknown as PerspectiveViewerElement;
@@ -49,6 +58,12 @@ class Graph extends Component<IProps, {}> {
 
       // Add more Perspective configurations here.
       elem.load(this.table);
+
+      /**
+      * Add the necessary attributes to the PerspectiveViewerElement in 'Graph.tsx'
+      * The attributes to add are: 'view', 'column-pivots', 'row-pivots', 'columns', and 'aggregates'
+      * Ensure the final element includes these attributes for proper rendering of the graph component
+      */
       elem.setAttribute('view', 'y_line');
       elem.setAttribute('column-pivots', '["stock"]');
       elem.setAttribute('row-pivots', '["timestamp"]');

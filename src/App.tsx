@@ -8,6 +8,7 @@ import './App.css';
  */
 interface IState {
   data: ServerRespond[],
+  // Add a new property 'showGraph' of type 'boolean' to the IState interface in App.tsx
   showGraph: boolean,
 }
 
@@ -23,6 +24,8 @@ class App extends Component<{}, IState> {
       // data saves the server responds.
       // We use this state to parse data down to the child element (Graph) as element property
       data: [],
+      // In the constructor of the App component, initialize 'showGraph' as false to keep the graph hidden initially
+      // The graph will be displayed when the user clicks 'Start Streaming Data'
       showGraph: false,
     };
   }
@@ -31,6 +34,8 @@ class App extends Component<{}, IState> {
    * Render Graph react component with state.data parse as property data
    */
   renderGraph() {
+    // Update the 'renderGraph' method to include a condition that checks if 'showGraph' is true
+    // The graph will only render when the 'showGraph' property in the App's state is true
     if (this.state.showGraph) {
       return (<Graph data={this.state.data} />)
     }
@@ -38,6 +43,9 @@ class App extends Component<{}, IState> {
 
   /**
    * Get new data from server and update the state with the new data
+   * Modify the 'getDataFromServer' method to continuously fetch data from the server using 'setInterval'
+   * Use a guard value to stop the interval when necessary, allowing continuous data streaming until stopped
+   * Ensure the method contacts the server at regular intervals to update the graph dynamically
    */
   getDataFromServer() {
     let x = 0;
